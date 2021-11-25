@@ -1,0 +1,22 @@
+Identifier = "LootFilter"
+Name = "Loot Filter"
+Description = "Loot Filter is designed to destroy all items in the inventory that match certain criteria. This is done with a manual command."
+
+Author = "Vueren#9253"
+Email = "vueren@pm.me"
+Version = "0.5"
+Environment = "4.5"
+
+--@no-lib-strip@
+Embed = {
+	["libs/LibString"] = true
+}
+--@end-no-lib-strip@
+
+Dependencies = {
+	LibString = { "required", "before" }
+}
+
+RunOnStartup = {
+	"LootFilter.lua"
+}
