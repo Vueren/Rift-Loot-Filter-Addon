@@ -67,7 +67,7 @@ local function addFilteredInventoryItems(filter)
                         and idetail.requiredLevel ~= 70) -- Makes sure they're all *NOT* Lv70
                 )
             ) then
-                print("Item Selected: " .. 
+                print("Item selected by '" .. filter .. "': " .. 
                     idetail.name .. -- Show name
                     (idetail.stack and " x " .. idetail.stack .. -- Show stack count if item is stackable
                         (idetail.sell and ' (' .. formatSilver(idetail.sell * idetail.stack) .. ')' or "") -- Show price for selling stack if item can be sold if item is stackable
