@@ -102,6 +102,7 @@ local function slashHandler(params)
         elseif(string.lower(arg1) == "clear") then
             -- clears selected items
             lootFilterItems = {}
+            print("All items selected removed from the list of items to delete.")
         elseif(string.lower(arg1) == "help") then
             printHelp()
         else
