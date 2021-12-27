@@ -4,7 +4,7 @@ Description = "Loot Filter is designed to destroy all items in the inventory tha
 
 Author = "Vueren#9253"
 Email = "vueren@pm.me"
-Version = "0.5"
+Version = "0.6"
 Environment = "4.5"
 
 --@no-lib-strip@
