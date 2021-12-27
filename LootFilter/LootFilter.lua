@@ -1,14 +1,16 @@
 -- Prints all the commands that can be used
 local function printCommands()
     print("Loot Filter:")
+    print("- /lf help - prints this list of commands.")
     print("- /lf select <rift|scroll|grey|dimension|non70>")
-    print("- /lf help - gives details on filters.")
+    print("- /lf filters - prints details on selection filters.")
     print("- /lf clear - clears selected items.")
-    print("- /lf delete - deletes selected items.")
+    print("- /lf delete - slates selected items for deletion.")
+    print("- /lf delete confirm - deletes selected items.")
 end
 
 -- Prints all the filters that can be used
-local function printHelp()
+local function printFilterCommands()
     print("- rift: Rift consumables can be seen in the /Consumables/Rift Consumable tab of the AH.")
     print("- scroll: Scrolls can be seen in the /Consumables/Scroll tab of the AH.")
     print("- grey: Grey items have rarity of grey. As these items can often add up to sell for a lot of plat on the Rift Store, it is recommended to not use this filter.")
@@ -39,6 +41,18 @@ local function startswith(str, start)
 end
 
 local lootFilterItems = {}
+local destroyInitiated = false
+
+-- helps display items in a format including info the user should probably see
+local function getFormattedItem(idetail)
+    return (
+        idetail.name .. -- Show name
+        (idetail.stack and " x " .. idetail.stack .. -- Show stack count if item is stackable
+            (idetail.sell and ' (' .. formatSilver(idetail.sell * idetail.stack) .. ')' or "") -- Show price for selling stack if item can be sold if item is stackable
+        or (idetail.sell and ' (' .. formatSilver(idetail.sell) .. ')' or "") -- Show price for selling if item can be sold if item is not stackable
+        ) -- End stacking logic
+    ) -- End generated item text
+end
 
 local function addFilteredInventoryItems(filter)
     for ikey,ival in pairs(Inspect.Item.List()) do
@@ -67,13 +81,7 @@ local function addFilteredInventoryItems(filter)
                         and idetail.requiredLevel ~= 70) -- Makes sure they're all *NOT* Lv70
                 )
             ) then
-                print("Item selected by '" .. filter .. "': " .. 
-                    idetail.name .. -- Show name
-                    (idetail.stack and " x " .. idetail.stack .. -- Show stack count if item is stackable
-                        (idetail.sell and ' (' .. formatSilver(idetail.sell * idetail.stack) .. ')' or "") -- Show price for selling stack if item can be sold if item is stackable
-                        or (idetail.sell and ' (' .. formatSilver(idetail.sell) .. ')' or "") -- Show price for selling if item can be sold if item is not stackable
-                    ) -- End stacking and pricing logic
-                    ) -- End print
+                print("Item selected by '" .. filter .. "': " .. getFormattedItem(idetail))
                 -- Add item to filtered items list
                 table.insert(lootFilterItems, idetail.id)
             end
@@ -85,26 +93,32 @@ local function slashHandler(params)
     local args = string.split(string.trim(params), "%s+", true)
     local arg1, arg2 = unpack(args)
     if(#args <= 0) then
-        printHelp()
+        printCommands()
     elseif(#args == 1 and arg1 ~= nil) then
         if(string.lower(arg1) == "delete") then
             -- delete items selected by selectItems
             if(#lootFilterItems ~= 0) then
+                print("===")
+                print("Item destruction initiated. WARNING: This action is permanent.")
+                print("Please confirm the following items.")
+                print("Type '/lf delete confirm' to destroy all items selected.")
+                print("===")
                 for k,item in pairs(lootFilterItems) do
-                    Command.Item.Destroy(item)
+                    idetail = Inspect.Item.Detail(item)
+                    print(getFormattedItem(idetail))
                 end
-                print('All items deleted. Please note that, as we tell you what items are being selected as you apply filters, we are not responsible for any item loss.')
-                -- clears selected items from Addon after deletion.
-                lootFilterItems = {}
+                destroyInitiated = true
             else
-                print("WARNING: No items selected with /lf select _! Use /lf help to see selection options. No actions performed.")
+                print("ERROR: No items selected with /lf select _! Use /lf filters to see selection options. No actions performed.")
             end
         elseif(string.lower(arg1) == "clear") then
             -- clears selected items
             lootFilterItems = {}
             print("All items selected removed from the list of items to delete.")
         elseif(string.lower(arg1) == "help") then
-            printHelp()
+            printCommands()
+        elseif(string.lower(arg1) == "filters") then
+            printFilterCommands()
         else
             print("ERROR: Command not found!")
             printCommands()
@@ -113,6 +127,24 @@ local function slashHandler(params)
         if(string.lower(arg1) == "select") then
             -- select items
             addFilteredInventoryItems(string.lower(arg2))
+            destroyInitiated = false
+        elseif(string.lower(arg1) == "delete") then
+            if(string.lower(arg2) == "confirm") then
+                if(destroyInitiated == true) then
+                    for k,item in pairs(lootFilterItems) do
+                        Command.Item.Destroy(item)
+                    end
+                    print("All items deleted. Please note that, as we tell you what items are being selected, we are not responsible for any item loss.")
+                    -- clears selected items from Addon after deletion.
+                    lootFilterItems = {}
+                    destroyInitiated = false
+                else
+                    print("ERROR: You cannot destroy items that you have not verified. Use '/lf delete' first!")
+                end
+            else
+                print("ERROR: Deletion not confirmed! No items destroyed.")
+                printCommands()
+            end
         else
             print("ERROR: Command not found!")
             printCommands()
