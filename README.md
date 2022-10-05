@@ -1,32 +1,37 @@
-# NOTE! THIS ADDON IS IN ALPHA DEVELOPMENT!
-# Loot Filter
-You want to delete useless items? Great, me too. I wrote an addon that'll allow you to select them by certain criteria and then delete them.
+# NOTE! THIS ADDON IS IN BETA DEVELOPMENT
 
-# AGAIN, ALPHA!
-The vast majority of all items in Rift are currently untested!
-This means that there is the very, VERY high possibility of selecting an item that you DO NOT want to delete!
-Thankfully, the addon will show you what may end up getting deleted.
-As long as you exercise caution with the /lf delete command, you shouldn't end up with any unnecessary item loss.
+## Loot Filter
 
-# AAAAAAAAAAALPHAAAAAAAAAAAAAAAAAAA!!!!!
-All items deleted are solely the responsibility of the end user.
-Be advised that readjusting your inventory space after applying filters may potentially break the addon. It is untested, to be quite frank.
-Did we mention that this is an alpha addon?
+You want to delete useless items? Great, me too.
 
-# Filters?
-Current filters:
-- rift items
-- scrolls
-- grey items
-- dimension items (not keys and not crates)
-- non lv70 gear
+I wrote an addon that'll allow you to select them, and then automatically delete them whenever they end up back in your inventory.
 
-# Why not just allow us to select the items from a list?
-As a multiboxer, I wanted a more manageable way that could be done with mouse broadcasting across all clients.
-Feel free to fork and work with the Inspect.Item.List() item list to make an addon that can allow the user to select specific items.
+Each Loot Filter is *PER CHARACTER*.
 
-# Ownership?
-Don't care. Feel free to slap a shiny sticker on your blatant copy stating that you own it exclusively. Timestamps will tell the true tale.
-Honestly I'm just throwing this code out here to hopefully spark interest in Rift addon dev. Scene's pretty dry and there's lots of addon ideas to take up. 
-Seriously. Just ask around for ideas, and learn what the API can and can't do. Maybe one day Gamigo will give us more API possibilities. 
-Until then, let's bleed the current API dry of all its possibilites. :)
+## AGAIN! BETA
+
+Type /lf to open the Loot Filter!
+
+Select an item by left clicking it. See all identical items in other slots in the inventory gain a yellow border.
+
+Use the Display Only Selected Items checkbox to see what should be getting deleted if you enable the deletion functionality.
+
+Once you are feeling brave and confident, checking Automatically Delete Selected Items will give you a confirmation box.
+
+Once you are *extremely* certain about things... Start! Watch the names of the items that are deleted show up in your General chat tab. See the emptied slots in your Inventory.
+
+Uncheck the Automatically Delete Selected Items box if you do not want to automatically delete items anymore.
+
+## BEEEEEEEEEEEETTTTTTTAAAAAAAAAAAAAAAAA
+
+Uncheck Automatically Delete Selected Items, get the item again, and Deselect the item if you want to stop deleting that item.
+
+Alternatively (nuclear option), use /lfnull to reset *ALL* of the addon's Selected Items for your character. Note that you cannot bring the settings for the selected items back - you will need to select them again using the addon as you obtain them.
+
+## Did we mention that this is an beta addon?
+
+The primary reason this addon is in beta is that it *needs testing*. As the addon developer, I cannot be 100% certain that there isn't an Error State, or that there isn't an item that is deleted somewhere that shouldn't be.
+
+As the addon developer, I *am*, however, reasonably confident enough in my code to put it into Beta, instead of Alpha.
+
+Please send any and all error messages my way via my Discord at Vueren#9253. If you are in the Heroes of Telara Discord, you should be able to DM me directly. I do not accept friend requests.

@@ -4,17 +4,25 @@ Description = "Loot Filter is designed to destroy all items in the inventory tha
 
 Author = "Vueren#9253"
 Email = "vueren@pm.me"
-Version = "0.6"
+Version = "0.8"
 Environment = "4.5"
 
 --@no-lib-strip@
 Embed = {
-	["libs/LibString"] = true
+	["libs/LibString"] = true,
+	["libs/libTimer"] = true,
+	["libs/LibSimpleWidgets"] = true
 }
 --@end-no-lib-strip@
 
 Dependencies = {
-	LibString = { "required", "before" }
+	LibString = { "required", "before" },
+	libTimer = { "required", "before" },
+	LibSimpleWidgets = { "required", "before" }
+}
+
+SavedVariables = {
+	LootFilter_Settings = 'character',
 }
 
 RunOnStartup = {

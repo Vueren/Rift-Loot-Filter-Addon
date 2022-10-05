@@ -1,0 +1,15 @@
+tag v1.14.5
+05f0330d5cfef596030e11405c99f50948dc8786
+Gordon Tyler <gordon@doxxx.net>
+2016-10-19 19:52:19 -0400
+
+v1.14.5
+
+
+--------------------
+
+Gordon Tyler:
+	- Bump version to 1.14.5.
+	- Fix SimpleScrollList mouse scrolling bug.
+	Thanks Lynx3d!
+	- Add missing Events header in SimpleWindow docs.

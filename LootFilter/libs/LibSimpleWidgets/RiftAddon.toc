@@ -1,0 +1,42 @@
+Identifier = "LibSimpleWidgets"
+
+Name = {
+  English = "Simple Widgets Library",
+}
+
+NameShort = "LSW"
+
+Description = {
+  English = "Library of simple GUI widgets for use by other addons.",
+}
+
+Author = "Gordon Tyler"
+Website = "http://www.riftui.com/downloads/info108-LibSimpleWidgets.html"
+Version = "1.14.5"
+Email = "gordon@doxxx.net"
+Environment = "2.5"
+
+RunOnStartup = {
+  "main.lua",
+  "eventproxy.lua",
+  "border.lua",
+  "scrollview.lua",
+  "window.lua",
+  "select.lua",
+  "list.lua",
+  "textarea.lua",
+  "checkbox.lua",
+  "slider.lua",
+  "tabview.lua",
+  "tooltip.lua",
+  "radiobutton.lua",
+  "radiobuttongroup.lua",
+  "scrolllist.lua",
+  "grid.lua",
+  "uicreateframe.lua",
+  "layout.lua",
+}
+-- X-Curse-Packaged-Version: v1.14.5
+-- X-Curse-Project-Name: LibSimpleWidgets
+-- X-Curse-Project-ID: libsimplewidgets
+-- X-Curse-Repository-ID: rift/libsimplewidgets/mainline

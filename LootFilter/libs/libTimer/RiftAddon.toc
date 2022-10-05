@@ -1,0 +1,29 @@
+-- Each addon needs a .toc file. A .toc file is a normal Lua file, although the standard libraries aren't included.
+
+-- Each addon needs a unique identifier. Please make sure it's descriptive! Identifiers must start with a letter and must consist solely of letters, numbers, and _.
+-- For regexp buffs, that's [a-zA-Z][a-zA-Z0-9_]*.
+Identifier = "libTimer"
+
+-- Each addon needs a human-readable name. Languages are not currently supported but they will be soon.
+Name = "Timer Library"
+
+-- It's recommended that you include a description, author, and website. These aren't required but they will be shown to users when enabling your addon.
+Description = "A library providing timers to other addons"
+Author = "Terrasque"
+-- Website = "http://www.riftgame.com"
+
+-- You may want to include a version string for your addon as well.
+Version = "0.1"
+
+-- An email is required. Trion may use this email to contact you about your addon, so please make sure it's valid.
+Email = "terrasque@thelazy.net"
+
+-- Addons must include which version of Rift they're designed to work with. Right now, the only valid number is "1.3".
+Environment = "1.3"
+
+-- Finally, addons must include a list of files that will be executed when the addon starts. These files must be packaged along with your addon and will be run in order.
+RunOnStartup = {
+  "main.lua",
+}
+
+-- If you want to include more information here, go right ahead! Variables starting with capital letters are reserved for Trion's use, but anything else is available for the users.
