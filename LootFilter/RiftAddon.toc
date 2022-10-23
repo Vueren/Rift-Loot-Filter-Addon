@@ -1,10 +1,10 @@
 Identifier = "LootFilter"
 Name = "Loot Filter"
-Description = "Loot Filter is designed to destroy all items in the inventory that match certain criteria. This is done with a manual command."
+Description = "Loot Filter is designed to destroy all selected items whenever they enter the inventory."
 
 Author = "Vueren#9253"
 Email = "vueren@pm.me"
-Version = "0.8"
+Version = "0.9"
 Environment = "4.5"
 
 --@no-lib-strip@
@@ -26,5 +26,5 @@ SavedVariables = {
 }
 
 RunOnStartup = {
-	"LootFilter.lua"
+	"LootFilter.lua",
 }

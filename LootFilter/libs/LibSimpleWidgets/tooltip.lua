@@ -19,6 +19,14 @@ local function ResizeToFit(self)
 end
 
 -- Public Functions
+local function GetText(self)
+  return self.text:GetText()
+end
+
+local function SetText(self, tooltipText)
+  self.text:SetText(tooltipText)
+  ResizeToFit(self)
+end
 
 local function GetFontSize(self)
   return self.text:GetFontSize()
@@ -162,6 +170,8 @@ function Library.LibSimpleWidgets.Tooltip(name, parent)
   ResizeToFit(widget)
 
   widget.GetFontSize = GetFontSize
+  widget.GetText = GetText
+  widget.SetText = SetText
   widget.SetFontSize = SetFontSize
   widget.GetFontColor = GetFontColor
   widget.SetFontColor = SetFontColor
