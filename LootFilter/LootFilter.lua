@@ -156,7 +156,12 @@ local function displayItem(bagSlot, itemSlot, posX, posY)
             borderFrame = UI.CreateFrame('Frame', 'Border:' .. tostring(bagSlot) .. ':' .. tostring(itemSlot) .. ':' .. idetail.type, lfUIInventoryFrame)
             borderFrame:EventAttach(Event.UI.Input.Mouse.Cursor.Move, function(self, h)
                 -- There is a bug with StatWeights. Imhothar's bag addon has the same bug.
-                Command.Tooltip(idetail.id)
+                local type, shown = Inspect.Tooltip()
+                if type ~= 'item' then
+                    Command.Tooltip(idetail.id)
+                elseif shown ~= idetail.id then
+                    Command.Tooltip(idetail.id)
+                end
             end, 'LF Item Start Mouseover')
             borderFrame:EventAttach(Event.UI.Input.Mouse.Cursor.Out, function(self, h)
                 Command.Tooltip(nil)
@@ -369,9 +374,14 @@ local function displayBag(bagSlotNum, posX, posY, numItemsInBag, numSelectedInBa
             end, 'Event.UI.Input.Mouse.Right.Down')
 
             -- Display the item tooltip on hover
-            borderFrame:EventAttach(Event.UI.Input.Mouse.Cursor.In, function(self, h)
+            borderFrame:EventAttach(Event.UI.Input.Mouse.Cursor.Move, function(self, h)
                 -- There is a bug with StatWeights. Imhothar's bag addon has the same bug.
-                Command.Tooltip(idetail.id)
+                local type, shown = Inspect.Tooltip()
+                if type ~= 'item' then
+                    Command.Tooltip(idetail.id)
+                elseif shown ~= idetail.id then
+                    Command.Tooltip(idetail.id)
+                end
             end, 'LF Item Start Mouseover')
             borderFrame:EventAttach(Event.UI.Input.Mouse.Cursor.Out, function(self, h)
                 Command.Tooltip(nil)
