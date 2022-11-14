@@ -154,7 +154,7 @@ local function displayItem(bagSlot, itemSlot, posX, posY)
         local borderFrame = nil
         if itemsDisplayed['Border:' .. tostring(bagSlot) .. ':' .. tostring(itemSlot) .. ':' .. idetail.type] == nil then
             borderFrame = UI.CreateFrame('Frame', 'Border:' .. tostring(bagSlot) .. ':' .. tostring(itemSlot) .. ':' .. idetail.type, lfUIInventoryFrame)
-            borderFrame:EventAttach(Event.UI.Input.Mouse.Cursor.In, function(self, h)
+            borderFrame:EventAttach(Event.UI.Input.Mouse.Cursor.Move, function(self, h)
                 -- There is a bug with StatWeights. Imhothar's bag addon has the same bug.
                 Command.Tooltip(idetail.id)
             end, 'LF Item Start Mouseover')
