@@ -1246,6 +1246,7 @@ local function slashHandler(eventHandle, params)
             elseif sanitizedArgs[2] == 'grey' or sanitizedArgs[2] == 'gray' then
                 LootFilter_Settings.AutoSelectGreyItems = not LootFilter_Settings.AutoSelectGreyItems
                 print('Auto Select Grey Items setting is now set to: ' .. tostring(LootFilter_Settings.AutoSelectGreyItems))
+                redisplayInventory()
             else
                 printHelp()
             end
