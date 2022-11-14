@@ -590,36 +590,30 @@ end
 -- - This guarantees that all items are in their slot when the addon makes its pass!
 -- - Before then, DO NOT auto delete!
 local function slotUpdate()
-    local allowDeletionIfAutoDeleting = false
     -- Check every half second if it has been 5 seconds yet
     if Inspect.Time.Server() <= lastUpdateServerTime + 5 then
         StartTimer(0.5, slotUpdate)
     else
         -- 5 seconds has passed
-        allowDeletionIfAutoDeleting = true
         lastUpdateServerTime = 0
-        redisplayInventory(allowDeletionIfAutoDeleting)
+        redisplayInventory(true)
     end
 
     if slotUpdates ~= nil then
         -- Update the loot filter inventory display anyway
-        local shouldUpdateLootFilter = false
-        for slotID,_ in pairs(slotUpdates) do
-            local itemLocation = Utility.Item.Slot.Parse(slotID)
-            if itemLocation == 'inventory' then
-                shouldUpdateLootFilter = true
-            end
-        end
-        if shouldUpdateLootFilter then
-            redisplayInventory()
-        end
+        redisplayInventory()
         slotUpdates = nil
     end
 end
 
 -- After a delay, automatically update the Loot Filter inventory if an item has moved around the bags.
 local function slotUpdateHandler(eventHandle, updates)
-    slotUpdates = updates
+    if slotUpdates == nil then
+        slotUpdates = {}
+    end
+    for slotID,v in pairs(updates) do
+        slotUpdates[slotID] = v
+    end
     -- Ensure that only one slotUpdate function is running at any given time
     if lastUpdateServerTime == 0 then
         StartTimer(0.5, slotUpdate)
