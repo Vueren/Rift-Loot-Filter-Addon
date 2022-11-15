@@ -26,5 +26,10 @@ SavedVariables = {
 }
 
 RunOnStartup = {
-	"LootFilter.lua",
+	"UI/General.lua",
+	"UI/InventoryConfig.lua",
+	"UI/SelectedItemsConfig.lua",
+	"UI/AutoDeleteConfirmation.lua",
+	"Utility/Settings.lua",
+	"Utility/Utility.lua",
 }
