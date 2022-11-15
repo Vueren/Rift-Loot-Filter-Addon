@@ -98,7 +98,7 @@ LF.Utility.DeleteItem = function(idetail)
                 if LF.Settings.DisplayChat then
                     Command.Console.Display('general', true, 'Loot Filter Deleting: ' .. idetail.name, false)
                 end
-                --Command.Item.Destroy(idetail.id)
+                Command.Item.Destroy(idetail.id)
             else
                 if LF.Settings.DisplayChat then
                     Command.Console.Display('general', true, 'Loot Filter Simulating Deleting: ' .. idetail.name, false)
