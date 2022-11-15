@@ -4,7 +4,7 @@ Description = "Loot Filter is designed to destroy all selected items whenever th
 
 Author = "Vueren#9253"
 Email = "vueren@pm.me"
-Version = "0.9.2"
+Version = "0.9.3"
 Environment = "4.5"
 
 --@no-lib-strip@
@@ -26,5 +26,10 @@ SavedVariables = {
 }
 
 RunOnStartup = {
-	"LootFilter.lua",
+	"UI/General.lua",
+	"UI/InventoryConfig.lua",
+	"UI/SelectedItemsConfig.lua",
+	"UI/AutoDeleteConfirmation.lua",
+	"Utility/Settings.lua",
+	"Utility/Utility.lua",
 }
