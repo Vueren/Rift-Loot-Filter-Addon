@@ -85,6 +85,26 @@ LF.Utility.GetNumberOfSelectedItemsInInventory = function()
     return numItems
 end
 
+-- Gets the items that are currently equipped
+LF.Utility.GetEquippedItemsList = function()
+    local equippedItems = {}
+    for ikey,ival in pairs(Inspect.Item.List(Utility.Item.Slot.Equipment())) do
+        -- Does not apply to empty equipment slots.
+        -- Only applies to items currently equipped.
+        -- Does not apply to Fragments.
+        local itemLocation,equipSlot = Utility.Item.Slot.Parse(ikey)
+        if(
+            ival ~= false
+            and itemLocation == 'equipment'
+            and not string.match(equipSlot, '^fragment')
+        ) then
+            local idetail = Inspect.Item.Detail(ikey) -- Get the current item details.
+            equippedItems[idetail.type] = idetail -- Save them by type
+        end
+    end
+    return equippedItems
+end
+
 -- Deletes the item if permitted. Returns true if item was deleted.
 LF.Utility.DeleteItem = function(idetail)
     if LF.Settings.AutoDeleting then
@@ -320,6 +340,42 @@ LF.Utility.SlashHandlerIDetail = function(_, params)
             else
                 print('No bag in this slot!')
             end
+        -- User wants to display information about a specific equipped item y (/idetail equipment y)
+        elseif
+            sanitizedArgs[1] == 'equipment'
+            and (
+                sanitizedArgs[2] == 'helmet' or
+                sanitizedArgs[2] == 'cape' or
+                sanitizedArgs[2] == 'shoulders' or
+                sanitizedArgs[2] == 'chest' or
+                sanitizedArgs[2] == 'gloves' or
+                sanitizedArgs[2] == 'belt' or
+                sanitizedArgs[2] == 'legs' or
+                sanitizedArgs[2] == 'feet' or
+                sanitizedArgs[2] == 'handmain' or
+                sanitizedArgs[2] == 'handoff' or
+                sanitizedArgs[2] == 'ranged' or
+                sanitizedArgs[2] == 'neck' or
+                sanitizedArgs[2] == 'trinket' or
+                sanitizedArgs[2] == 'ring1' or
+                sanitizedArgs[2] == 'ring2' or
+                sanitizedArgs[2] == 'earring1' or
+                sanitizedArgs[2] == 'earring2' or
+                sanitizedArgs[2] == 'synergy' or
+                sanitizedArgs[2] == 'focus' or
+                sanitizedArgs[2] == 'seal'
+            )
+        then
+            local idetail = Inspect.Item.Detail(Utility.Item.Slot.Equipment(sanitizedArgs[2]))
+            if idetail ~= nil then
+                print('===')
+                for k,v in pairs(idetail) do
+                    print(tostring(k) .. ': ' .. tostring(v))
+                end
+                print('===')
+            else
+                print('No item in this equipment slot!')
+            end
         end
     -- User wants to inspect all items in a specific bag x (/idetail x)
     elseif
@@ -337,6 +393,25 @@ LF.Utility.SlashHandlerIDetail = function(_, params)
             ) then
                 local idetail = Inspect.Item.Detail(ikey) -- Get the current item details.
                 print(idetail.name .. ': ' .. ikey .. ' | ' .. ival .. ' | ' .. bagSlot .. ' | ' .. itemSlot)
+            end
+        end
+    -- User wants to inspect all gear items (/idetail equipment)
+    elseif
+        #sanitizedArgs == 1
+        and sanitizedArgs[1] == 'equipment'
+    then
+        for ikey,ival in pairs(Inspect.Item.List(Utility.Item.Slot.Equipment())) do
+            -- Does not apply to empty equipment slots.
+            -- Only applies to items currently equipped.
+            -- Does not apply to Fragments.
+            local itemLocation,equipSlot = Utility.Item.Slot.Parse(ikey)
+            if(
+                ival ~= false
+                and itemLocation == 'equipment'
+                and not string.match(equipSlot, '^fragment')
+            ) then
+                local idetail = Inspect.Item.Detail(ikey) -- Get the current item details.
+                print(idetail.name .. ': ' .. ikey .. ' | ' .. ival .. ' | ' .. equipSlot)
             end
         end
     -- Display basic info about all items in the entire inventory to the user (/idetail *or* an unrecognized command)

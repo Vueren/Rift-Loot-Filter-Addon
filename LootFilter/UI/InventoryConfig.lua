@@ -70,6 +70,12 @@ LF.UI.InventoryConfig.DisplayItem = function(bagSlot, itemSlot, posX, posY)
                             icon = idetail.icon,
                             rarity = idetail.rarity
                         }
+                        -- Check if the item is currently equipped
+                        for itype,_ in pairs(LF.Utility.GetEquippedItemsList()) do
+                            if idetail.type == itype then
+                                LF.UI.CurrentlyEquippedWarning.CreateCurrentlyEquippedWarningWindow()
+                            end
+                        end
                         LF.Settings.PushUpdatesToSavedVariables()
                     else
                         LF.Settings.SelectedItems[idetail.type] = nil
@@ -203,6 +209,7 @@ end
 LF.UI.InventoryConfig.ToggleSelectAllItemsInBag = function(bagSlotNum)
     -- Check if the bag exists
     local bag = Inspect.Item.Detail(Utility.Item.Slot.Inventory('bag', bagSlotNum))
+    local currentlyEquippedItemSelected = false
     local itemsToDeselect = {}
     local unselectedItemFound = false
     if bag ~= nil then
@@ -218,6 +225,12 @@ LF.UI.InventoryConfig.ToggleSelectAllItemsInBag = function(bagSlotNum)
                         rarity = idetail.rarity
                     }
                     LF.Settings.PushUpdatesToSavedVariables()
+                    -- Check if the item is currently equipped
+                    for itype,_ in pairs(LF.Utility.GetEquippedItemsList()) do
+                        if idetail.type == itype then
+                            currentlyEquippedItemSelected = true
+                        end
+                    end
                     unselectedItemFound = true
                 else
                     itemsToDeselect[idetail.type] = {
@@ -234,6 +247,11 @@ LF.UI.InventoryConfig.ToggleSelectAllItemsInBag = function(bagSlotNum)
         for idetailType,_ in pairs(itemsToDeselect) do
             LF.Settings.SelectedItems[idetailType] = nil
             LF.Settings.PushUpdatesToSavedVariables()
+        end
+    else
+        -- A currently equipped item got Selected. Make sure to warn the user!
+        if currentlyEquippedItemSelected == true then
+            LF.UI.CurrentlyEquippedWarning.CreateCurrentlyEquippedWarningWindow()
         end
     end
 end
